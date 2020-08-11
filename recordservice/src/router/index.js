@@ -1,15 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import record from '@/components/record'
+import login from '@/components/login'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
+  routes: [{
+      path: '/record',
+      name: 'record',
+      component: record
+    },
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'login',
+      component: login
     }
+
   ]
 })
