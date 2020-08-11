@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="login-box">
+  <div>
+    <div class="login-box" >
       <!-- 通过:rules="loginFormRules"来绑定输入内容的校验规则 -->
       <el-form :rules="loginFormRules" ref="loginForm" :model="loginForm" label-position="right" label-width="auto"
         show-message>
@@ -53,6 +54,7 @@
         </div>
       </el-dialog>
     </div>
+  </div>
   </div>
 </template>
 <script>
