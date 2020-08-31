@@ -2,7 +2,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      size: 5,
+      size: 9,
       tableData: [],
 
       // 新增表单
@@ -149,7 +149,12 @@ export default {
     quit() {
       console.log("quit")
       this.$router.replace("./");
+    },
+    OilRecord() {
+      console.log("OilRecord")
+      this.$router.replace("/oilrecord");
     }
+    
   },
   mounted: function() {
     this.getall()

@@ -3,14 +3,16 @@
 <template>
   <div class="app">
     <el-row>
-      <el-button type="primary" @click="quit()">安全退出</el-button>
+       <el-button type="warning" @click="quit()" plain>安全退出</el-button>
+       <el-button type="primary" @click="OilRecord()" plain>加油记录</el-button>
+       <el-button type="primary" @click="OilRecord()" plain>打印记录</el-button>
     </el-row>
     <el-table :data="tableData.slice((currentPage-1)*size,currentPage*size)" style="width: 100%">
-      <el-table-column prop="id" label="序号" width="350">
+      <!--  <el-table-column prop="id" label="序号" width="350">
         <template slot-scope="scope">
           <el-input v-model="scope.row.id" style="width:275px;" :disabled="true"></el-input>
         </template>
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column prop="date" label="日期" width="350">
         <template slot-scope="scope">
           <el-input v-model="scope.row.date" style="width:275px;" @blur="handleUpdate(scope.row)"></el-input>
