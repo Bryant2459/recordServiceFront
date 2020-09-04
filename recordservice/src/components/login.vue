@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="login-box">
+  <div>
+    <div class="login-box"  >
       <!-- 通过:rules="loginFormRules"来绑定输入内容的校验规则 -->
       <el-form :rules="loginFormRules" ref="loginForm" :model="loginForm" label-position="right" label-width="auto"
         show-message>
@@ -21,38 +22,40 @@
           <el-button type="primary" @click="onRegit()">注册</el-button>
         </el-form-item>
       </el-form>
+     <div >
+       <el-dialog title="新增用户" :visible.sync="dialogCreateVisible" style="text-align: left">
+         <el-form :rules="addFormRules" ref="addForm" :model="addForm" :label-width="addFormLabelWidth">
+           <el-form-item label="用户名" prop="userName">
+             <el-input v-model="addForm.userName" name="userName" placeholder="请输入用户名"></el-input>
+           </el-form-item>
+           <el-form-item label="密码" prop="userPassword">
+             <el-input v-model="addForm.userPassword" name="userPassword"></el-input>
+           </el-form-item>
+           <el-form-item label="真实姓名" prop="realName">
+             <el-input v-model="addForm.realName" name="realName"></el-input>
+           </el-form-item>
+           <el-form-item label="性别" prop="gender">
+             <el-input v-model="addForm.gender" name="gender"></el-input>
+           </el-form-item>
+           <el-form-item label="身份证" prop="identityCard">
+             <el-input v-model="addForm.identityCard" name="identityCard"></el-input>
+           </el-form-item>
+           <el-form-item label="手机" prop="phone">
+             <el-input v-model="addForm.phone" name="phone"></el-input>
+           </el-form-item>
+           <el-form-item label="地址" prop="address">
+             <el-input v-model="addForm.address" name="address"></el-input>
+           </el-form-item>
+         </el-form>
+         <div slot="footer" class="dialog-footer">
+           <el-button @click="createReset">取消</el-button>
+           <el-button @click.native="createSubmit" :loading="addLoading" type="primary">确定</el-button>
+         </div>
+       </el-dialog>
+     </div>
     </div>
-    <div>
-      <el-dialog title="新增用户" :visible.sync="dialogCreateVisible" style="text-align: left">
-        <el-form :rules="addFormRules" ref="addForm" :model="addForm" :label-width="addFormLabelWidth">
-          <el-form-item label="用户名" prop="userName">
-            <el-input v-model="addForm.userName" name="userName" placeholder="请输入用户名"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="userPassword">
-            <el-input v-model="addForm.userPassword" name="userPassword"></el-input>
-          </el-form-item>
-          <el-form-item label="真实姓名" prop="realName">
-            <el-input v-model="addForm.realName" name="realName"></el-input>
-          </el-form-item>
-          <el-form-item label="性别" prop="gender">
-            <el-input v-model="addForm.gender" name="gender"></el-input>
-          </el-form-item>
-          <el-form-item label="身份证" prop="identityCard">
-            <el-input v-model="addForm.identityCard" name="identityCard"></el-input>
-          </el-form-item>
-          <el-form-item label="手机" prop="phone">
-            <el-input v-model="addForm.phone" name="phone"></el-input>
-          </el-form-item>
-          <el-form-item label="地址" prop="address">
-            <el-input v-model="addForm.address" name="address"></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="createReset">取消</el-button>
-          <el-button @click.native="createSubmit" :loading="addLoading" type="primary">确定</el-button>
-        </div>
-      </el-dialog>
-    </div>
+
+  </div>
   </div>
 </template>
 <script>
@@ -216,19 +219,21 @@
   .login-box {
     border: 1px solid #DCDFE6;
     width: 350px;
-    margin: 180px auto;
+    margin: 180px 180px 180px 1000px;
     padding: 35px 35px 15px 35px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    box-shadow: 0 0 25px palegreen;
+
   }
 
   .login-title {
     text-align: center;
     margin: 0 auto 40px auto;
-    color: #66CD00;
+    color: #409EFF;
     font-size: 30px;
     font-weight: bold;
   }
+
+
 </style>

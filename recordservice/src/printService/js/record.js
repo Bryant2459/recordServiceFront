@@ -4,7 +4,7 @@ export default {
       currentPage: 1,
       size: 5,
       tableData: [],
-
+      table2Data: [],
       // 新增表单
       addForm: {
         date: '',
@@ -78,7 +78,7 @@ export default {
             };
             var data = this.$qs.stringify(parematers);
             console.log(data);
-            this.$http.post('/addRecord', data).then(res => {
+            this.$http.post('/print/addPrintRecord', data).then(res => {
               this.addLoading = false;
               this.$message({
                 type: 'success',
@@ -104,8 +104,16 @@ export default {
     },
     /*查询*/
     getall() {
-      this.$http.get('/all').then((res) => {
+      this.$http.get('/print/findAllPrintRecords').then((res) => {
         this.tableData = res.data.data; //把传回来数据赋给table
+        var table2obj={};
+        var printSum=0;
+      for(var i=0;i<res.data.data.length;i++){
+            printSum=printSum+res.data.data[i].money;
+        }
+        table2obj['printSum'] = printSum;
+        this.table2Data.push(table2obj);
+
       }).catch(function(error) {
         console.log(error);
       })
@@ -126,7 +134,7 @@ export default {
         id: index.id
       };
       var data = this.$qs.stringify(parematers);
-      this.$http.post('/deleteRecord', data).then((response) => {
+      this.$http.post('/print/deletePrintRecord', data).then((response) => {
         this.getall();
         //alert(response.data);
         //这里是del成功以后需要做的。
@@ -142,13 +150,25 @@ export default {
         money: index.money
       };
       var data = this.$qs.stringify(parematers);
-      this.$http.post('/updateRecordById', data).then((response) => {
+      this.$http.post('/print/updatePrintRecordById', data).then((response) => {
         console.log(response.status);
       })
     },
     quit() {
       console.log("quit")
       this.$router.replace("./");
+    },
+    OilRecord() {
+      console.log("OilRecord")
+      this.$router.replace("/oilrecord");
+    },
+    PrintRecord() {
+      console.log("record")
+      this.$router.replace("/record");
+    },
+    toXiYaoPerson() {
+      console.log("xiyaoperson")
+      this.$router.replace("/xiyaoperson");
     }
   },
   mounted: function() {
