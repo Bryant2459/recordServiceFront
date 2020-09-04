@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import record from '@/components/record'
 import login from '@/components/login'
 import oilrecord from '@/components/oilrecord'
+import xiyaoperson from '@/components/xiyaoperson'
+
+
 
 Vue.use(Router)
 
@@ -21,6 +24,11 @@ export default new Router({
       path: '/oilrecord',
       name: 'oilrecord',
       component: oilrecord
+    },
+    {
+      path: '/xiyaoperson',
+      name: 'xiyaoperson',
+      component: xiyaoperson
     }
 
   ]

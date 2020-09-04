@@ -78,7 +78,7 @@ export default {
             };
             var data = this.$qs.stringify(parematers);
             console.log(data);
-            this.$http.post('/addRecord', data).then(res => {
+            this.$http.post('/print/addPrintRecord', data).then(res => {
               this.addLoading = false;
               this.$message({
                 type: 'success',
@@ -104,7 +104,7 @@ export default {
     },
     /*查询*/
     getall() {
-      this.$http.get('/all').then((res) => {
+      this.$http.get('/print/findAllPrintRecords').then((res) => {
         this.tableData = res.data.data; //把传回来数据赋给table
         var table2obj={};
         var printSum=0;
@@ -134,7 +134,7 @@ export default {
         id: index.id
       };
       var data = this.$qs.stringify(parematers);
-      this.$http.post('/deleteRecord', data).then((response) => {
+      this.$http.post('/print/deletePrintRecord', data).then((response) => {
         this.getall();
         //alert(response.data);
         //这里是del成功以后需要做的。
@@ -150,7 +150,7 @@ export default {
         money: index.money
       };
       var data = this.$qs.stringify(parematers);
-      this.$http.post('/updateRecordById', data).then((response) => {
+      this.$http.post('/print/updatePrintRecordById', data).then((response) => {
         console.log(response.status);
       })
     },
@@ -165,8 +165,11 @@ export default {
     PrintRecord() {
       console.log("record")
       this.$router.replace("/record");
+    },
+    toXiYaoPerson() {
+      console.log("xiyaoperson")
+      this.$router.replace("/xiyaoperson");
     }
-
   },
   mounted: function() {
     this.getall()
