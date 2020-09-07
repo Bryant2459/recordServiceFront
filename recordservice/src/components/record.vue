@@ -3,11 +3,12 @@
 <template>
   <div class="app">
     <el-row>
-       <el-button type="warning" @click="quit()" plain>安全退出</el-button>
-       <el-button type="primary" @click="OilRecord()" plain>加油记录</el-button>
-       <el-button type="primary"  plain>打印记录</el-button>
-        <el-button type="primary" @click="toXiYaoPerson()" plain>西姚村花名册</el-button>
-       <el-button type="primary" plain>查看</el-button>
+      <el-button type="warning" @click="quit()" plain>安全退出</el-button>
+      <el-button type="primary" @click="OilRecord()" plain>加油记录</el-button>
+      <el-button type="primary" plain>打印记录</el-button>
+      <el-button type="primary" @click="toXiYaoPerson()" plain>西姚村花名册</el-button>
+       <el-button type="primary"  @click="toLifeRecord()" plain>收支明细</el-button>
+      <el-button type="primary" plain>查看</el-button>
     </el-row>
     <el-table :data="tableData.slice((currentPage-1)*size,currentPage*size)" style="width: 100%">
       <!--  <el-table-column prop="id" label="序号" width="350">
@@ -46,10 +47,10 @@
         </template>
       </el-table-column>
     </el-table>
-   <div>
+    <div>
       <el-table :data="table2Data" style="width: 100%">
 
-        <el-table-column prop="printSum" label="打印收入总和" width="200px">  </el-table-column>
+        <el-table-column prop="printSum" label="打印收入总和" width="200px"> </el-table-column>
 
       </el-table>
     </div>

@@ -106,10 +106,10 @@ export default {
     getall() {
       this.$http.get('/print/findAllPrintRecords').then((res) => {
         this.tableData = res.data.data; //把传回来数据赋给table
-        var table2obj={};
-        var printSum=0;
-      for(var i=0;i<res.data.data.length;i++){
-            printSum=printSum+res.data.data[i].money;
+        var table2obj = {};
+        var printSum = 0;
+        for (var i = 0; i < res.data.data.length; i++) {
+          printSum = printSum + res.data.data[i].money;
         }
         table2obj['printSum'] = printSum;
         this.table2Data.push(table2obj);
@@ -169,7 +169,12 @@ export default {
     toXiYaoPerson() {
       console.log("xiyaoperson")
       this.$router.replace("/xiyaoperson");
-    }
+    },
+    toLifeRecord() {
+            // console.log("record")
+            this.$router.replace("/liferecord");
+     }
+
   },
   mounted: function() {
     this.getall()

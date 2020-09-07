@@ -5,6 +5,7 @@
       <el-button type="primary" plain>加油记录</el-button>
       <el-button type="primary" @click="toPrint()" plain>打印记录</el-button>
       <el-button type="primary" @click="toXiYaoPerson()" plain>西姚村花名册</el-button>
+      <el-button type="primary"  @click="toLifeRecord()" plain>收支明细</el-button>
       <el-button type="primary" plain>查看</el-button>
     </el-row>
 
@@ -90,9 +91,9 @@
     <div>
       <el-table :data="table2Data" style="width: 100%">
 
-        <el-table-column prop="OilSum" label="加油量总和" width="350px">  </el-table-column>
-        <el-table-column prop="OilCostSum" label="加油花费" width="350px">  </el-table-column>
-         <el-table-column prop="OilRealCostSum" label="加油实际总花费" width="350px">  </el-table-column>
+        <el-table-column prop="OilSum" label="加油量总和" width="350px"> </el-table-column>
+        <el-table-column prop="OilCostSum" label="加油花费" width="350px"> </el-table-column>
+        <el-table-column prop="OilRealCostSum" label="加油实际总花费" width="350px"> </el-table-column>
       </el-table>
     </div>
 
@@ -310,51 +311,51 @@
       getall() {
         this.$http.get('/oil/findAll').then((res) => {
           this.tableData = res.data.data; //把传回来数据赋给table
-          var table2obj={};
-          var OilSum=0;
-          var OilCostSum=0;
-          var OilRealCostSum=0;
-       for(var i=0;i<res.data.data.length;i++){
-            OilSum=OilSum+res.data.data[i].oilVolume;
-            OilCostSum=OilCostSum+res.data.data[i].cost;
-            OilRealCostSum=OilRealCostSum+res.data.data[i].realCost;
-        }
+          var table2obj = {};
+          var OilSum = 0;
+          var OilCostSum = 0;
+          var OilRealCostSum = 0;
+          for (var i = 0; i < res.data.data.length; i++) {
+            OilSum = OilSum + res.data.data[i].oilVolume;
+            OilCostSum = OilCostSum + res.data.data[i].cost;
+            OilRealCostSum = OilRealCostSum + res.data.data[i].realCost;
+          }
 
-//保留两位小数
-        table2obj['OilSum'] =  OilSum.toFixed(2);
+          //保留两位小数
+          table2obj['OilSum'] = OilSum.toFixed(2);
 
-        table2obj['OilCostSum'] = OilCostSum;
-        table2obj['OilRealCostSum'] = OilRealCostSum;
-        this.table2Data.push(table2obj);
+          table2obj['OilCostSum'] = OilCostSum;
+          table2obj['OilRealCostSum'] = OilRealCostSum;
+          this.table2Data.push(table2obj);
 
         }).catch(function(error) {
           console.log(error);
         })
       },
       getMockOilData() {
-              this.$http.get('/mock/findAllMockDatas').then((res) => {
-                this.tableData = res.data.data.data; //把传回来数据赋给table
-                var table2obj={};
-                var OilSum=0;
-                var OilCostSum=0;
-                var OilRealCostSum=0;
-             for(var i=0;i<res.data.data.data.length;i++){
-                  OilSum=OilSum+res.data.data.data[i].oilVolume;
-                  OilCostSum=OilCostSum+res.data.data.data[i].cost;
-                  OilRealCostSum=OilRealCostSum+res.data.data.data[i].realCost;
-              }
+        this.$http.get('/mock/findAllMockDatas').then((res) => {
+          this.tableData = res.data.data.data; //把传回来数据赋给table
+          var table2obj = {};
+          var OilSum = 0;
+          var OilCostSum = 0;
+          var OilRealCostSum = 0;
+          for (var i = 0; i < res.data.data.data.length; i++) {
+            OilSum = OilSum + res.data.data.data[i].oilVolume;
+            OilCostSum = OilCostSum + res.data.data.data[i].cost;
+            OilRealCostSum = OilRealCostSum + res.data.data.data[i].realCost;
+          }
 
-      //保留两位小数
-              table2obj['OilSum'] =  OilSum.toFixed(2);
+          //保留两位小数
+          table2obj['OilSum'] = OilSum.toFixed(2);
 
-              table2obj['OilCostSum'] = OilCostSum;
-              table2obj['OilRealCostSum'] = OilRealCostSum;
-              this.table2Data.push(table2obj);
+          table2obj['OilCostSum'] = OilCostSum;
+          table2obj['OilRealCostSum'] = OilRealCostSum;
+          this.table2Data.push(table2obj);
 
-              }).catch(function(error) {
-                console.log(error);
-              })
-            },
+        }).catch(function(error) {
+          console.log(error);
+        })
+      },
       handleSizeChange(val) {
         // console.log(`每页 ${val} 条`);
         this.size = val
@@ -397,7 +398,7 @@
         var data = this.$qs.stringify(parematers);
         this.$http.post('/oil/updateRecordById', data).then((response) => {
           // console.log(response.status);
-         // this.getall();
+          // this.getall();
         })
       },
       quit() {
