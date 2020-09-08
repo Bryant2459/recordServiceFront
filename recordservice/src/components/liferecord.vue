@@ -6,87 +6,62 @@
       <el-button type="primary" @click="toPrint()" plain>打印记录</el-button>
       <el-button type="primary" @click="toXiYaoPerson()" plain>西姚村花名册</el-button>
       <el-button type="primary" plain>收支明细</el-button>
-      <el-button type="primary" plain>查看</el-button>
+       <el-button type="primary"  @click="toUser()" plain>用户列表</el-button>
+      <hr>
+  <span>
+      <el-select v-model="value" placeholder="请选择 搜索类别">
+        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+        </el-option>
+      </el-select>
+
+    <!--    <el-date-picker
+          v-model="selectTime"
+          type="datetimerange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
+        </el-date-picker>
+ -->
+      <el-button type="primary" @click="findDateByCategoryID()" plain>搜索</el-button>
+
+</span>
+
     </el-row>
 
     <el-table :data="tableData.slice((currentPage-1)*size,currentPage*size)" style="width: 100%">
-      <!--  <el-table-column prop="id" label="序号" width="100px">
-        <template slot-scope="scope">
-          <el-input v-model="scope.row.id" style="width:70px;" :disabled="true"></el-input>
-        </template>
-      </el-table-column>-->
+
       <el-table-column prop="produceRecordDate" label="日期" align="center" width="200px">
-        <!-- <template slot-scope="scope">
-          <el-input v-model="scope.row.produceRecordDate" style="width:180px;" @blur="handleUpdate(scope.row)"></el-input>
-        </template> -->
       </el-table-column>
-      <!-- <el-table-column prop="categoryId" label="分类" align="center" width="100px">
-
-        <template slot-scope="scope">
-          <el-input v-model="scope.row.categoryId" style="width:80px;" @blur="handleUpdate(scope.row)">
-          </el-input>
-        </template>
-
-      </el-table-column> -->
-
       <el-table-column prop="category" label="类别" align="center" width="150px">
-        <!-- <template slot-scope="scope">
-          <el-input v-model="scope.row.category" style="width:120px;" @blur="handleUpdate(scope.row)"></el-input>
-        </template> -->
+
       </el-table-column>
 
-      <el-table-column prop="recordProducer" label="收入/支出人" align="center" width="120px">
+      <el-table-column prop="recordProducer" label="收入/支出人" align="center" width="200px">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.recordProducer" style="width:100px;" @blur="handleUpdate(scope.row)"></el-input>
+          <el-input v-model="scope.row.recordProducer" style="width:180px;" @blur="handleUpdate(scope.row)"></el-input>
         </template>
       </el-table-column>
-      <el-table-column prop="money" label="收入/支出(RMB)" align="center" width="150px">
+      <el-table-column prop="money" label="收入/支出(RMB)" align="center" width="200px">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.money" style="width:120px;" @blur="handleUpdate(scope.row)"></el-input>
+          <el-input v-model="scope.row.money" style="width:180px;" @blur="handleUpdate(scope.row)"></el-input>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="firstAddDate" label="首次存入时间" align="center" width="200px">
+      <el-table-column prop="remark" label="备注" align="center" width="300px">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.firstAddDate" style="width:180px;" @blur="handleUpdate(scope.row)"></el-input>
+          <el-input v-model="scope.row.remark" style="width:280px;" @blur="handleUpdate(scope.row)"></el-input>
         </template>
       </el-table-column>
-      <el-table-column prop="lastUpdateDate" label="修改时间" align="center" width="200px">
-        <template slot-scope="scope">
-          <el-input v-model="scope.row.lastUpdateDate" style="width:180px;" @blur="handleUpdate(scope.row)"></el-input>
-        </template>
-      </el-table-column> -->
-      <el-table-column prop="remark" label="备注" align="center" width="350px">
-        <template slot-scope="scope">
-          <el-input v-model="scope.row.remark" style="width:300px;" @blur="handleUpdate(scope.row)"></el-input>
-        </template>
-      </el-table-column>
-
-     <!-- <el-table-column prop="operator" label="操作人" align="center" width="100px">
-        <template slot-scope="scope">
-          <el-input v-model="scope.row.operator" style="width:80px;" @blur="handleUpdate(scope.row)"></el-input>
-        </template>
-      </el-table-column> -->
 
       <el-table-column label="操作" align="center">
+
         <template slot-scope="scope">
-          <el-button type="text" size="small">
-            <span>
-              <i class="el-icon-circle-plus" @click="handleAdd()"></i>
-              <i class="el-icon-delete" @click="handleDelete(scope.row)"></i>
-            </span>
-          </el-button>
+          <el-button size="mini" @click="handleAdd()">新增</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
         </template>
+
+
       </el-table-column>
     </el-table>
-    <!--  <div>
-      <el-table :data="table2Data" style="width: 100%">
-
-        <el-table-column prop="OilSum" label="加油量总和" width="350px">  </el-table-column>
-        <el-table-column prop="OilCostSum" label="加油花费" width="350px">  </el-table-column>
-         <el-table-column prop="OilRealCostSum" label="加油实际总花费" width="350px">  </el-table-column>
-      </el-table>
-    </div>
- -->
     <!--增加西姚人员内容-->
     <el-dialog title="新增收支信息" :visible.sync="dialogCreateVisible" style="text-align: left">
       <el-form :rules="addFormRules" ref="addForm" :model="addForm" :label-width="addFormLabelWidth">
@@ -102,20 +77,16 @@
         </el-form-item>
 
         <el-form-item label="分类" prop="categoryId">
-          <!--  <el-input v-model="addForm.categoryId"></el-input> -->
           <el-select v-model="value" placeholder="请选择">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-form-item>
-        <!--   <el-form-item label="类别" prop="category">
-          <el-input v-model="addForm.category" auto-complete="off"></el-input>
-        </el-form-item> -->
         <el-form-item label="收/支人" prop="recordProducer">
-        <el-select v-model="person" placeholder="请选择">
-          <el-option v-for="item in persons" :key="item.value" :label="item.label" :value="item.value">
-          </el-option>
-        </el-select>
+          <el-select v-model="person" placeholder="请选择">
+            <el-option v-for="item in persons" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="收入/支出" prop="money">
           <el-input v-model="addForm.money" auto-complete="off"></el-input>
@@ -147,6 +118,8 @@
   export default {
     data() {
       return {
+
+        selectTime: [new Date(2018, 10, 10, 10, 10), new Date(2020, 10, 11, 10, 10)],
         options: [{
           value: '1',
           label: '超市'
@@ -177,7 +150,7 @@
         }, {
           value: '2',
           label: '党玉莹'
-        } ,{
+        }, {
           value: '3',
           label: '其他'
         }],
@@ -227,8 +200,6 @@
       }
     },
     methods: {
-
-
       //  显示新增
       handleAdd() {
         this.dialogCreateVisible = true;
@@ -293,63 +264,34 @@
           console.log(error);
         })
       },
-      rowspan() {
-        this.tableData.forEach((item, index) => {
-          if (index === 0) {
-            this.spanArr.push(1);
-            this.position = 0;
-          } else {
-            if (this.tableData[index].headHousHold === this.tableData[index - 1].headHousHold) {
-              this.spanArr[this.position] += 1;
-              this.spanArr.push(0);
-            } else {
-              this.spanArr.push(1);
-              this.position = index;
-            }
-          }
-        })
-      },
-      objectSpanMethod({
-        row,
-        column,
-        rowIndex,
-        columnIndex
-      }) { //表格合并行
-        if (columnIndex === 0) {
-          const _row = this.spanArr[rowIndex];
-          const _col = _row > 0 ? 1 : 0;
-          return {
-            rowspan: _row,
-            colspan: _col
-          }
-        }
-        // if(columnIndex === 1){
-        //     const _row = this.spanArr[rowIndex];
-        //     const _col = _row>0 ? 1 : 0;
-        //     return {
-        //         rowspan: _row,
-        //         colspan: _col
-        //     }
-        // }
-      },
-      getMockOilData() {
-        this.$http.get('/mock/findAllMockDatas').then((res) => {
-          this.tableData = res.data.data.data; //把传回来数据赋给table
+      findDateByCategoryID() {
+        let parematers = {
+          categoryId: this.value
+        };
+        var data = this.$qs.stringify(parematers);
+        this.$http.post('/lifeRecord/selectLifeRecordByCategoryID', data).then((res) => {
+          // this.tableData = res.data.data; //把传回来数据赋给table
+
+          console.log("res.data.status:"+res.data.status)
+          if (res.data.status == "7777") {
+            this.tableData = [];
+          }else if (res.data.data.length > 0) {
+            this.tableData = res.data.data;
+          };
+          // this.rowspan();
         }).catch(function(error) {
           console.log(error);
         })
       },
+
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
         this.size = val
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
         this.currentPage = val
       },
       //删除
       handleDelete(index) {
-
         this.tableData.splice(index + 1, 1); //---前端删除index要+1 !!!!!!!
         let parematers = {
           id: index.id
@@ -381,20 +323,19 @@
         })
       },
       quit() {
-        // console.log("quit")
         this.$router.replace("./");
       },
       toPrint() {
-        // console.log("record")
         this.$router.replace("/record");
       },
       OilRecord() {
-        // console.log("record")
         this.$router.replace("/oilrecord");
       },
       toXiYaoPerson() {
-        // console.log("record")toXiYaoPerson
         this.$router.replace("/xiyaoperson");
+      },
+      toUser() {
+        this.$router.replace("/user");
       }
 
     },

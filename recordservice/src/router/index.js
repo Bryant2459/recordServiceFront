@@ -5,7 +5,7 @@ import login from '@/components/login'
 import oilrecord from '@/components/oilrecord'
 import xiyaoperson from '@/components/xiyaoperson'
 import liferecord from '@/components/liferecord'
-
+import user from '@/components/user'
 
 Vue.use(Router)
 
@@ -34,6 +34,11 @@ export default new Router({
       path: '/liferecord',
       name: 'liferecord',
       component: liferecord
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: user
     }
 
   ]

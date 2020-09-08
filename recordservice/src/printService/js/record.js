@@ -173,7 +173,14 @@ export default {
     toLifeRecord() {
             // console.log("record")
             this.$router.replace("/liferecord");
-     }
+     },
+     toUser() {
+             this.$router.replace("/user");
+           },
+    OilRecord() {
+             this.$router.replace("/oilrecord");
+           },
+           
 
   },
   mounted: function() {

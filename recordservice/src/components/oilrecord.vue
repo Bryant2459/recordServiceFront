@@ -6,7 +6,8 @@
       <el-button type="primary" @click="toPrint()" plain>打印记录</el-button>
       <el-button type="primary" @click="toXiYaoPerson()" plain>西姚村花名册</el-button>
       <el-button type="primary"  @click="toLifeRecord()" plain>收支明细</el-button>
-      <el-button type="primary" plain>查看</el-button>
+       <el-button type="primary"  @click="toUser()" plain>用户列表</el-button>
+
     </el-row>
 
     <el-table :data="tableData.slice((currentPage-1)*size,currentPage*size)" style="width: 100%">
@@ -78,14 +79,16 @@
       </el-table-column>-->
 
       <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button type="text" size="small">
-            <span>
-              <i class="el-icon-circle-plus" @click="handleAdd()"></i>
-              <i class="el-icon-delete" @click="handleDelete(scope.row)"></i>
-            </span>
-          </el-button>
-        </template>
+       <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleAdd()">新增</el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="handleDelete(scope.row)">删除</el-button>
+          </template>
+
       </el-table-column>
     </el-table>
     <div>
@@ -412,7 +415,14 @@
       toXiYaoPerson() {
         // console.log("record")toXiYaoPerson
         this.$router.replace("/xiyaoperson");
-      }
+      },
+      toUser() {
+        this.$router.replace("/user");
+      },
+      toLifeRecord() {
+        // console.log("record")toXiYaoPerson
+        this.$router.replace("/liferecord");
+      },
 
 
     },
