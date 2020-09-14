@@ -152,6 +152,7 @@ export default {
       var data = this.$qs.stringify(parematers);
       this.$http.post('/print/updatePrintRecordById', data).then((response) => {
         console.log(response.status);
+      //  this.getall();
       })
     },
     quit() {
@@ -180,7 +181,7 @@ export default {
     OilRecord() {
              this.$router.replace("/oilrecord");
            },
-           
+
 
   },
   mounted: function() {

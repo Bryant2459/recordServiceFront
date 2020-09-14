@@ -7,6 +7,7 @@
       <el-button type="primary" @click="toXiYaoPerson()" plain>西姚村花名册</el-button>
       <el-button type="primary" plain>收支明细</el-button>
        <el-button type="primary"  @click="toUser()" plain>用户列表</el-button>
+       <el-button type="success">Kobe Bryant</el-button>
       <hr>
   <span>
       <el-select v-model="value" placeholder="请选择 搜索类别">
@@ -62,6 +63,11 @@
 
       </el-table-column>
     </el-table>
+    <!-- <div>
+      <el-table :data="table2Data" style="width: 100%">
+        <el-table-column prop="classSum" label="上课总收入" width="350px" align="center"> </el-table-column>
+      </el-table>
+    </div> -->
     <!--增加西姚人员内容-->
     <el-dialog title="新增收支信息" :visible.sync="dialogCreateVisible" style="text-align: left">
       <el-form :rules="addFormRules" ref="addForm" :model="addForm" :label-width="addFormLabelWidth">
@@ -101,6 +107,8 @@
 
         <!---->
       </el-form>
+
+
       <div slot="footer" class="dialog-footer">
         <el-button @click="createReset">取消</el-button>
         <el-button @click.native="createSubmit" :loading="addLoading" type="primary">确定</el-button>
@@ -118,7 +126,7 @@
   export default {
     data() {
       return {
-
+        table2Data: [],
         selectTime: [new Date(2018, 10, 10, 10, 10), new Date(2020, 10, 11, 10, 10)],
         options: [{
           value: '1',
@@ -141,6 +149,15 @@
         }, {
           value: '7',
           label: '其他'
+        }, {
+          value: '8',
+          label: '水费'
+        }, {
+          value: '9',
+          label: '电费'
+        }, {
+          value: '10',
+          label: '医药费'
         }],
         value: '',
         person: '',
@@ -259,6 +276,16 @@
       getall() {
         this.$http.get('/lifeRecord/selectAllLifeRecord').then((res) => {
           this.tableData = res.data.data; //把传回来数据赋给table
+         //      var table2obj = {};
+         //      var classSum = 0;
+         //    for (var i = 0; i < res.data.data.length; i++) {
+         //     if(res.data.data[i].categoryId == 5 ){
+         //        classSum = classSum + res.data.data[i].money;
+         //     }
+         //    }
+         //     table2obj['classSum'] = classSum;
+         // this.table2Data.push(table2obj);
+
           // this.rowspan();
         }).catch(function(error) {
           console.log(error);

@@ -7,6 +7,7 @@
       <el-button type="primary" @click="toXiYaoPerson()" plain>西姚村花名册</el-button>
       <el-button type="primary"  @click="toLifeRecord()" plain>收支明细</el-button>
        <el-button type="primary"  @click="toUser()" plain>用户列表</el-button>
+        <el-button type="success">Kobe Bryant</el-button>
 
     </el-row>
 

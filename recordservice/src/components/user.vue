@@ -7,6 +7,7 @@
       <el-button type="primary" @click="toXiYaoPerson()" plain>西姚村花名册</el-button>
       <el-button type="primary"  @click="toLifeRecord()" plain>收支明细</el-button>
       <el-button type="primary" plain>用户列表</el-button>
+          <el-button type="success">Kobe Bryant</el-button>
     </el-row>
     <el-table :data="tableData.slice((currentPage-1)*size,currentPage*size)" style="width: 100%">
       <el-table-column prop="realName" label="姓名" width="200px" align="center">

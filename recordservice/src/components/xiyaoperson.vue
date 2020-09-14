@@ -7,6 +7,7 @@
       <el-button type="primary" plain>西姚村花名册</el-button>
       <el-button type="primary"  @click="toLifeRecord()" plain>收支明细</el-button>
       <el-button type="primary"  @click="toUser()" plain>用户列表</el-button>
+          <el-button type="success">Kobe Bryant</el-button>
     </el-row>
 
     <el-table :data="tableData.slice((currentPage-1)*size,currentPage*size)" :span-method="objectSpanMethod" style="width: 100%">
@@ -375,7 +376,7 @@
         var data = this.$qs.stringify(parematers);
         this.$http.post('/xiyao/updateXiYaoPersonByID', data).then((response) => {
           // console.log(response.status);
-          // this.getall();
+          //this.getall();
         })
       },
       quit() {
