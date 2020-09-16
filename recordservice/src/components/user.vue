@@ -10,17 +10,15 @@
       <el-button type="success">Kobe Bryant</el-button>
     </el-row>
     <el-table :data="tableData.slice((currentPage-1)*size,currentPage*size)" style="width: 100%">
-      <el-table-column prop="picture" label="头像" width="200px" align="center"> </el-table-column>
+      <el-table-column prop="picture" label="头像" width="200px" align="center">
+        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+      </el-table-column>
       <el-table-column prop="uploadPic" label="修改头像" width="380px" align="center">
 
-        <el-upload name="file" 　　
-        class="avatar-uploader" :action="updateUrl" :data="itemForm" 　　
-        :before-upload="beforeAvatarUpload"
-          :on-error="handleError" 
-          :on-progress="handleProgress" 　　
-          :on-success="handleAvatarSuccess" 
-          ref="newupload">
-          　　<el-button slot="trigger" size="small" icon="el-icon-upload" style="margin-top: 20px;">选择上传文件
+        <el-upload name="file" 　　 class="avatar-uploader" :action="updateUrl" :data="itemForm" 　　 :before-upload="beforeAvatarUpload"
+          :on-error="handleError" :on-progress="handleProgress" 　　 :on-success="handleAvatarSuccess" ref="newupload">
+
+          <el-button slot="trigger" size="small" icon="el-icon-upload" style="margin-top: 0px;">选择上传文件
             　　</el-button>
           　　<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb </div>
         </el-upload>
@@ -48,7 +46,10 @@
   export default {
     data() {
       return {
-        itemForm: {},
+        imageUrl: "",
+        itemForm: {
+          id: "",
+        },
         fd: '', //向服务器进行传递的参数（带有图片formdata）
         updateUrl: '/api/file/upload',
         currentPage: 1,
@@ -60,23 +61,25 @@
       }
     },
     methods: {
-      //点击提交按钮，向服务器传递你要传递的参数，涉及到formData　　
-      //点击提交按钮，向服务器传递你要传递的参数，涉及到formData　　
-      submitBtn() {
-        this.fd = new FormData()
-        if (this.file != null) {
-          this.fd.append('file', this.file)
-        }
-        let config = {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
+      handleClick(index) {
+
+        this.id = index.id;
+
+
+
+        //alert(response.data);
+        //这里是del成功以后需要做的。
 
       },
       handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
+        if (res.message == "上传成功") {
 
+          this.imageUrl = 'http://localhost:8081/file/image/' + res.data;
+          var srt = "";
+          console.log(this.imageUrl);
+        } else {
+          alert("上传图片失败");
+        }
       },
       handleError() {
 
