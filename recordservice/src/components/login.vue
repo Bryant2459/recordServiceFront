@@ -147,7 +147,7 @@
               if (response.data.message == '登陆成功') {
                 // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
                 // console.log("to loginSuccess")
-                this.$router.replace("/record");
+                this.$router.replace("/oilrecord");
               } else {
                 // this.$router.replace("/");
               }

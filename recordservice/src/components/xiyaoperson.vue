@@ -2,10 +2,12 @@
   <div class="app">
     <el-row>
       <el-button type="warning" @click="quit()" plain>安全退出</el-button>
-      <el-button type="primary" plain>加油记录</el-button>
+      <el-button type="primary" @click="OilRecord()" plain>加油记录</el-button>
       <el-button type="primary" @click="toPrint()" plain>打印记录</el-button>
-        <el-button type="primary" @click="toXiYaoPerson()" plain>西姚村花名册</el-button>
-      <el-button type="primary" plain>查看</el-button>
+      <el-button type="primary" plain>西姚村花名册</el-button>
+      <el-button type="primary"  @click="toLifeRecord()" plain>收支明细</el-button>
+      <el-button type="primary"  @click="toUser()" plain>用户列表</el-button>
+          <el-button type="success">Kobe Bryant</el-button>
     </el-row>
 
     <el-table :data="tableData.slice((currentPage-1)*size,currentPage*size)" :span-method="objectSpanMethod" style="width: 100%">
@@ -15,14 +17,14 @@
         </template>
       </el-table-column>-->
       <el-table-column prop="headHousHold" label="户主姓名" align="center" width="150px">
-    <!--    <template slot-scope="scope">
+        <!--    <template slot-scope="scope">
           <el-input v-model="scope.row.headHousHold" style="width:100px;" @blur="handleUpdate(scope.row)"></el-input>
         </template> -->
       </el-table-column>
       <el-table-column prop="familyMember" label="家庭成员" align="center" width="150px">
 
         <template slot-scope="scope">
-          <el-input v-model="scope.row.familyMember" style="width:100px;" @blur="handleUpdate(scope.row)" >
+          <el-input v-model="scope.row.familyMember" style="width:100px;" @blur="handleUpdate(scope.row)">
           </el-input>
         </template>
 
@@ -44,35 +46,37 @@
           <el-input v-model="scope.row.phone" style="width:120px;" @blur="handleUpdate(scope.row)"></el-input>
         </template>
       </el-table-column>
-      <el-table-column prop="identityCard" label="身份证"  align="center"width="200px">
+      <el-table-column prop="identityCard" label="身份证" align="center" width="200px">
         <template slot-scope="scope">
           <el-input v-model="scope.row.identityCard" style="width:180px;" @blur="handleUpdate(scope.row)"></el-input>
         </template>
       </el-table-column>
-      <el-table-column prop="address" label="地址" align="center" width="350px">
+      <el-table-column prop="address" label="地址" align="center" width="300px">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.address" style="width:320px;" @blur="handleUpdate(scope.row)"></el-input>
+          <el-input v-model="scope.row.address" style="width:280px;" @blur="handleUpdate(scope.row)"></el-input>
         </template>
       </el-table-column>
 
-      <el-table-column prop="remark" label="备注"  align="center" width="200px">
+      <el-table-column prop="remark" label="备注" align="center" width="200px">
         <template slot-scope="scope">
           <el-input v-model="scope.row.remark" style="width:175px;" @blur="handleUpdate(scope.row)"></el-input>
         </template>
       </el-table-column>
 
       <el-table-column label="操作" align="center">
-        <template slot-scope="scope">
-          <el-button type="text" size="small">
-            <span>
-              <i class="el-icon-circle-plus" @click="handleAdd()"></i>
-              <i class="el-icon-delete" @click="handleDelete(scope.row)"></i>
-            </span>
-          </el-button>
-        </template>
+       <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleAdd()">新增</el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="handleDelete(scope.row)">删除</el-button>
+          </template>
+
       </el-table-column>
     </el-table>
-  <!--  <div>
+    <!--  <div>
       <el-table :data="table2Data" style="width: 100%">
 
         <el-table-column prop="OilSum" label="加油量总和" width="350px">  </el-table-column>
@@ -96,7 +100,7 @@
         </el-form-item>
 
         <el-form-item label="户主姓名" prop="headHousHold">
-          <el-input v-model="addForm.headHousHold" ></el-input>
+          <el-input v-model="addForm.headHousHold"></el-input>
         </el-form-item>
         <el-form-item label="家庭成员" prop="familyMember">
           <el-input v-model="addForm.familyMember" auto-complete="off"></el-input>
@@ -142,10 +146,10 @@
   export default {
     data() {
       return {
-         rowList: [],
-         spanArr: [],
-         position: 0,
-         listData: [],
+        rowList: [],
+        spanArr: [],
+        position: 0,
+        listData: [],
         currentPage: 1,
         size: 10,
         tableData: [],
@@ -281,52 +285,57 @@
       getall() {
         this.$http.get('/xiyao/selectAllXiYaoPerson').then((res) => {
           this.tableData = res.data.data; //把传回来数据赋给table
-           this.rowspan();
-           }).catch(function(error) {
+          this.rowspan();
+        }).catch(function(error) {
           console.log(error);
         })
       },
       rowspan() {
-            this.tableData.forEach((item,index) => {
-              if( index === 0){
-                  this.spanArr.push(1);
-                  this.position = 0;
-              }else{
-                  if(this.tableData[index].headHousHold === this.tableData[index-1].headHousHold ){
-                      this.spanArr[this.position] += 1;
-                      this.spanArr.push(0);
-                  }else{
-                      this.spanArr.push(1);
-                      this.position = index;
-                  }
-              }
-          })
-        },
-        objectSpanMethod({ row, column, rowIndex, columnIndex }) {  //表格合并行
-                if (columnIndex === 0) {
-                    const _row = this.spanArr[rowIndex];
-                    const _col = _row>0 ? 1 : 0;
-                    return {
-                        rowspan: _row,
-                        colspan: _col
-                    }
-                }
-                // if(columnIndex === 1){
-                //     const _row = this.spanArr[rowIndex];
-                //     const _col = _row>0 ? 1 : 0;
-                //     return {
-                //         rowspan: _row,
-                //         colspan: _col
-                //     }
-                // }
-            },
+        this.tableData.forEach((item, index) => {
+          if (index === 0) {
+            this.spanArr.push(1);
+            this.position = 0;
+          } else {
+            if (this.tableData[index].headHousHold === this.tableData[index - 1].headHousHold) {
+              this.spanArr[this.position] += 1;
+              this.spanArr.push(0);
+            } else {
+              this.spanArr.push(1);
+              this.position = index;
+            }
+          }
+        })
+      },
+      objectSpanMethod({
+        row,
+        column,
+        rowIndex,
+        columnIndex
+      }) { //表格合并行
+        if (columnIndex === 0) {
+          const _row = this.spanArr[rowIndex];
+          const _col = _row > 0 ? 1 : 0;
+          return {
+            rowspan: _row,
+            colspan: _col
+          }
+        }
+        // if(columnIndex === 1){
+        //     const _row = this.spanArr[rowIndex];
+        //     const _col = _row>0 ? 1 : 0;
+        //     return {
+        //         rowspan: _row,
+        //         colspan: _col
+        //     }
+        // }
+      },
       getMockOilData() {
-              this.$http.get('/mock/findAllMockDatas').then((res) => {
-                this.tableData = res.data.data.data; //把传回来数据赋给table
-              }).catch(function(error) {
-                console.log(error);
-              })
-            },
+        this.$http.get('/mock/findAllMockDatas').then((res) => {
+          this.tableData = res.data.data.data; //把传回来数据赋给table
+        }).catch(function(error) {
+          console.log(error);
+        })
+      },
       handleSizeChange(val) {
         // console.log(`每页 ${val} 条`);
         this.size = val
@@ -367,7 +376,7 @@
         var data = this.$qs.stringify(parematers);
         this.$http.post('/xiyao/updateXiYaoPersonByID', data).then((response) => {
           // console.log(response.status);
-         // this.getall();
+          //this.getall();
         })
       },
       quit() {
@@ -378,12 +387,17 @@
         // console.log("record")
         this.$router.replace("/record");
       },
-
-      toXiYaoPerson() {
-        console.log("xiyaoperson")
-        this.$router.replace("/xiyaoperson");
-      }
-
+      OilRecord() {
+        // console.log("record")
+        this.$router.replace("/oilrecord");
+      },
+      toLifeRecord() {
+        // console.log("record")
+        this.$router.replace("/liferecord");
+      },
+       toUser() {
+              this.$router.replace("/user");
+            }
 
     },
     mounted: function() {
