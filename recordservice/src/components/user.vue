@@ -5,47 +5,37 @@
       <el-button type="primary" @click="OilRecord()" plain>加油记录</el-button>
       <el-button type="primary" @click="toPrint()" plain>打印记录</el-button>
       <el-button type="primary" @click="toXiYaoPerson()" plain>西姚村花名册</el-button>
-      <el-button type="primary"  @click="toLifeRecord()" plain>收支明细</el-button>
+      <el-button type="primary" @click="toLifeRecord()" plain>收支明细</el-button>
       <el-button type="primary" plain>用户列表</el-button>
-          <el-button type="success">Kobe Bryant</el-button>
+      <el-button type="success">Kobe Bryant</el-button>
     </el-row>
     <el-table :data="tableData.slice((currentPage-1)*size,currentPage*size)" style="width: 100%">
-      <el-table-column prop="realName" label="姓名" width="200px" align="center">
-        <template slot-scope="scope">
-          <el-input v-model="scope.row.realName" style="width:150px;" @blur="handleUpdate(scope.row)"></el-input>
-        </template>
-      </el-table-column>
-      <el-table-column prop="gender" label="性别" width="170px" align="center">
-        <template slot-scope="scope">
-          <el-input v-model="scope.row.gender" style="width:140px;" @blur="handleUpdate(scope.row)">
-          </el-input>
-        </template>
-      </el-table-column>
+      <el-table-column prop="picture" label="头像" width="200px" align="center"> </el-table-column>
+      <el-table-column prop="uploadPic" label="修改头像" width="380px" align="center">
 
-      <el-table-column prop="identityCard" label="身份证号" width="220px" align="center">
-        <template slot-scope="scope">
-          <el-input v-model="scope.row.identityCard" style="width:200px;" @blur="handleUpdate(scope.row)"></el-input>
-        </template>
-      </el-table-column>
+        <el-upload name="file" 　　
+        class="avatar-uploader" :action="updateUrl" :data="itemForm" 　　
+        :before-upload="beforeAvatarUpload"
+          :on-error="handleError" 
+          :on-progress="handleProgress" 　　
+          :on-success="handleAvatarSuccess" 
+          ref="newupload">
+          　　<el-button slot="trigger" size="small" icon="el-icon-upload" style="margin-top: 20px;">选择上传文件
+            　　</el-button>
+          　　<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb </div>
+        </el-upload>
 
-      <el-table-column prop="address" label="地址" width="300px" align="center">
-        <template slot-scope="scope">
-          <el-input v-model="scope.row.address" style="width:280px;" @blur="handleUpdate(scope.row)"></el-input>
-        </template>
       </el-table-column>
-      <el-table-column prop="phone" label="手机" width="240px" align="center">
+      <el-table-column prop="realName" label="姓名" width="150px" align="center"> </el-table-column>
+      <el-table-column prop="gender" label="性别" width="100px" align="center"></el-table-column>
+      <el-table-column prop="address" label="地址" width="300px" align="center"></el-table-column>
+      <el-table-column prop="phone" label="手机" width="210px" align="center"> </el-table-column>
+      <el-table-column label="操作" width="150px" align="center">
         <template slot-scope="scope">
-          <el-input v-model="scope.row.phone" style="width:220px;" @blur="handleUpdate(scope.row)"></el-input>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
         </template>
-      </el-table-column>
-
-      <el-table-column label="操作" width="390px"  align="center">
-          <template slot-scope="scope">
-              <el-button size="mini" type="danger"  @click="handleDelete(scope.row)">删除</el-button>
-          </template>
       </el-table-column>
     </el-table>
-
     <div class="block" style="margin-left:30%">
       <!-- <span class="demonstration">完整功能</span> -->
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
@@ -58,6 +48,9 @@
   export default {
     data() {
       return {
+        itemForm: {},
+        fd: '', //向服务器进行传递的参数（带有图片formdata）
+        updateUrl: '/api/file/upload',
         currentPage: 1,
         size: 5,
         tableData: [],
@@ -67,6 +60,45 @@
       }
     },
     methods: {
+      //点击提交按钮，向服务器传递你要传递的参数，涉及到formData　　
+      //点击提交按钮，向服务器传递你要传递的参数，涉及到formData　　
+      submitBtn() {
+        this.fd = new FormData()
+        if (this.file != null) {
+          this.fd.append('file', this.file)
+        }
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+
+      },
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+
+      },
+      handleError() {
+
+      },
+      handleProgress(event, file, fileList) {
+        this.loading = true; //  上传时执行loading事件
+      },
+      beforeAvatarUpload(file) {
+        //在头像上传之前需要做的判断，如判断文件格式
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2
+        if (!isJPG) {
+          this.$message.warning('上传头像图片只能是 JPG/PNG/GIF 格式!')
+          return isJPG
+        }
+        if (!isLt2M) {
+          this.$message.warning('上传头像图片大小不能超过 2MB!')
+          return isLt2M
+        }
+        this.file = file
+        return isJPG && isLt2M
+      },
       /*查询*/
       getall() {
         this.$http.get('/user/findAllUser').then((res) => {
@@ -138,9 +170,9 @@
         this.$router.replace("/liferecord");
       },
       OilRecord() {
-      console.log("OilRecord")
-      this.$router.replace("/oilrecord");
-    },
+        console.log("OilRecord")
+        this.$router.replace("/oilrecord");
+      },
 
     },
     mounted: function() {
@@ -149,8 +181,31 @@
 
   }
 </script>
-<style scoped>
-  a {
-    color: #42b983;
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
   }
 </style>
