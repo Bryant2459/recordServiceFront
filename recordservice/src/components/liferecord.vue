@@ -158,6 +158,9 @@
         }, {
           value: '10',
           label: '医药费'
+        }, {
+          value: '11',
+          label: '保险'
         }],
         value: '',
         person: '',
