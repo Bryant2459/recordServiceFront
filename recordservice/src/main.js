@@ -8,9 +8,12 @@ import axios from 'axios'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import qs from 'qs'
+import echarts from 'echarts'
+
+
 
 Vue.use(ElementUI);
-
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.prototype.$http = axios;
 //配全局属性配置，在任意组件内可以使用this.$qs获取qs对象

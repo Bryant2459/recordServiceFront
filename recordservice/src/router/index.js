@@ -6,6 +6,9 @@ import oilrecord from '@/components/oilrecord'
 import xiyaoperson from '@/components/xiyaoperson'
 import liferecord from '@/components/liferecord'
 import user from '@/components/user'
+import pictable from '@/components/pictable'
+import student from '@/components/student'
+
 
 Vue.use(Router)
 
@@ -24,6 +27,16 @@ export default new Router({
       path: '/oilrecord',
       name: 'oilrecord',
       component: oilrecord
+    },
+    {
+      path: '/pictable',
+      name: 'pictable',
+      component: pictable
+    },
+    {
+      path: '/student',
+      name: 'student',
+      component: student
     },
     {
       path: '/xiyaoperson',

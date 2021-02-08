@@ -152,7 +152,7 @@ export default {
       var data = this.$qs.stringify(parematers);
       this.$http.post('/print/updatePrintRecordById', data).then((response) => {
         console.log(response.status);
-      //  this.getall();
+        //  this.getall();
       })
     },
     quit() {
@@ -172,16 +172,19 @@ export default {
       this.$router.replace("/xiyaoperson");
     },
     toLifeRecord() {
-            // console.log("record")
-            this.$router.replace("/liferecord");
-     },
-     toUser() {
-             this.$router.replace("/user");
-           },
+      // console.log("record")
+      this.$router.replace("/liferecord");
+    },
+    toUser() {
+      this.$router.replace("/user");
+    },
     OilRecord() {
-             this.$router.replace("/oilrecord");
-           },
-
+      this.$router.replace("/oilrecord");
+    },
+    toStudent() {
+      this.$router.replace("/student");
+      //toPicTable
+    }
 
   },
   mounted: function() {

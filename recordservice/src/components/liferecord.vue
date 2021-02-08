@@ -6,16 +6,17 @@
       <el-button type="primary" @click="toPrint()" plain>打印记录</el-button>
       <el-button type="primary" @click="toXiYaoPerson()" plain>西姚村花名册</el-button>
       <el-button type="primary" plain>收支明细</el-button>
-       <el-button type="primary"  @click="toUser()" plain>用户列表</el-button>
-       <el-button type="success">Kobe Bryant</el-button>
+      <el-button type="primary" @click="toUser()" plain>用户列表</el-button>
+      <el-button type="primary" @click="toStudent()" plain>学生列表</el-button>
+      <el-button type="success" @click="toPicTable()">Kobe Bryant</el-button>
       <hr>
-  <span>
-      <el-select v-model="value" placeholder="请选择 搜索类别">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-        </el-option>
-      </el-select>
+      <span>
+        <el-select v-model="value" placeholder="请选择 搜索类别">
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
 
-    <!--    <el-date-picker
+        <!--    <el-date-picker
           v-model="selectTime"
           type="datetimerange"
           range-separator="至"
@@ -23,9 +24,9 @@
           end-placeholder="结束日期">
         </el-date-picker>
  -->
-      <el-button type="primary" @click="findDateByCategoryID()" plain>搜索</el-button>
+        <el-button type="primary" @click="findDateByCategoryID()" plain>搜索</el-button>
 
-</span>
+      </span>
 
     </el-row>
 
@@ -279,15 +280,15 @@
       getall() {
         this.$http.get('/lifeRecord/selectAllLifeRecord').then((res) => {
           this.tableData = res.data.data; //把传回来数据赋给table
-         //      var table2obj = {};
-         //      var classSum = 0;
-         //    for (var i = 0; i < res.data.data.length; i++) {
-         //     if(res.data.data[i].categoryId == 5 ){
-         //        classSum = classSum + res.data.data[i].money;
-         //     }
-         //    }
-         //     table2obj['classSum'] = classSum;
-         // this.table2Data.push(table2obj);
+          //      var table2obj = {};
+          //      var classSum = 0;
+          //    for (var i = 0; i < res.data.data.length; i++) {
+          //     if(res.data.data[i].categoryId == 5 ){
+          //        classSum = classSum + res.data.data[i].money;
+          //     }
+          //    }
+          //     table2obj['classSum'] = classSum;
+          // this.table2Data.push(table2obj);
 
           // this.rowspan();
         }).catch(function(error) {
@@ -302,10 +303,10 @@
         this.$http.post('/lifeRecord/selectLifeRecordByCategoryID', data).then((res) => {
           // this.tableData = res.data.data; //把传回来数据赋给table
 
-          console.log("res.data.status:"+res.data.status)
+          console.log("res.data.status:" + res.data.status)
           if (res.data.status == "7777") {
             this.tableData = [];
-          }else if (res.data.data.length > 0) {
+          } else if (res.data.data.length > 0) {
             this.tableData = res.data.data;
           };
           // this.rowspan();
@@ -366,6 +367,15 @@
       },
       toUser() {
         this.$router.replace("/user");
+        //toPicTable
+      },
+      toPicTable() {
+        this.$router.replace("/pictable");
+        //toPicTable
+      },
+      toStudent() {
+        this.$router.replace("/student");
+        //toPicTable
       }
 
     },

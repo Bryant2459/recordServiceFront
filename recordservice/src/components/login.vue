@@ -1,61 +1,69 @@
 <template>
   <div>
-  <div>
-    <div class="login-box"  >
-      <!-- 通过:rules="loginFormRules"来绑定输入内容的校验规则 -->
-      <el-form :rules="loginFormRules" ref="loginForm" :model="loginForm" label-position="right" label-width="auto"
-        show-message>
-        <span class="login-title">欢迎登录</span>
-        <div style="margin-top: 5px"></div>
-        <el-form-item label="用户名" prop="userName">
-          <el-col :span="22">
-            <el-input type="text" v-model="loginForm.userName"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="密码" prop="userPassword">
-          <el-col :span="22">
-            <el-input type="password" v-model="loginForm.userPassword"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="loginSubmit('loginForm')">登录</el-button>
-          <el-button type="primary" @click="onRegit()">注册</el-button>
-        </el-form-item>
-      </el-form>
-     <div >
-       <el-dialog title="新增用户" :visible.sync="dialogCreateVisible" style="text-align: left">
-         <el-form :rules="addFormRules" ref="addForm" :model="addForm" :label-width="addFormLabelWidth">
-           <el-form-item label="用户名" prop="userName">
-             <el-input v-model="addForm.userName" name="userName" placeholder="请输入用户名"></el-input>
-           </el-form-item>
-           <el-form-item label="密码" prop="userPassword">
-             <el-input v-model="addForm.userPassword" name="userPassword"></el-input>
-           </el-form-item>
-           <el-form-item label="真实姓名" prop="realName">
-             <el-input v-model="addForm.realName" name="realName"></el-input>
-           </el-form-item>
-           <el-form-item label="性别" prop="gender">
-             <el-input v-model="addForm.gender" name="gender"></el-input>
-           </el-form-item>
-           <el-form-item label="身份证" prop="identityCard">
-             <el-input v-model="addForm.identityCard" name="identityCard"></el-input>
-           </el-form-item>
-           <el-form-item label="手机" prop="phone">
-             <el-input v-model="addForm.phone" name="phone"></el-input>
-           </el-form-item>
-           <el-form-item label="地址" prop="address">
-             <el-input v-model="addForm.address" name="address"></el-input>
-           </el-form-item>
-         </el-form>
-         <div slot="footer" class="dialog-footer">
-           <el-button @click="createReset">取消</el-button>
-           <el-button @click.native="createSubmit" :loading="addLoading" type="primary">确定</el-button>
-         </div>
-       </el-dialog>
-     </div>
-    </div>
+    <div>
+      <div class="login-box">
+        <!-- 通过:rules="loginFormRules"来绑定输入内容的校验规则 -->
+        <el-form :rules="loginFormRules" ref="loginForm" :model="loginForm" label-position="right" label-width="auto"
+          show-message>
+          <span class="login-title">欢迎登录</span>
+          <div style="margin-top: 5px"></div>
+          <el-form-item label="用户名" prop="userName">
+            <el-col :span="22">
+              <el-input type="text" v-model="loginForm.userName"></el-input>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="密码" prop="userPassword">
+            <el-col :span="22">
+              <el-input type="password" v-model="loginForm.userPassword"></el-input>
+            </el-col>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="loginSubmit('loginForm')">登录</el-button>
+            <el-button type="primary" @click="onRegit()">注册</el-button>
+          </el-form-item>
+        </el-form>
+        <div>
+          <el-dialog title="新增用户" :visible.sync="dialogCreateVisible" style="text-align: left">
+            <el-form :rules="addFormRules" ref="addForm" :model="addForm" :label-width="addFormLabelWidth">
+              <el-form-item label="用户名" prop="userName">
+                <el-input v-model="addForm.userName" name="userName" placeholder="请输入用户名"></el-input>
+              </el-form-item>
+              <el-form-item label="密码" prop="userPassword">
+                <el-input v-model="addForm.userPassword" name="userPassword"></el-input>
+              </el-form-item>
+              <el-form-item label="真实姓名" prop="realName">
+                <el-input v-model="addForm.realName" name="realName"></el-input>
+              </el-form-item>
+              <el-form-item label="性别" prop="gender">
+                <el-input v-model="addForm.gender" name="gender"></el-input>
+              </el-form-item>
+              <el-form-item label="身份证" prop="identityCard">
+                <el-input v-model="addForm.identityCard" name="identityCard"></el-input>
+              </el-form-item>
+              <el-form-item label="手机" prop="phone">
+                <el-input v-model="addForm.phone" name="phone"></el-input>
+              </el-form-item>
+              <el-form-item label="地址" prop="address">
+                <el-input v-model="addForm.address" name="address"></el-input>
+              </el-form-item>
 
-  </div>
+              <el-form-item label="角色" prop="role">
+                <el-select v-model="roles" placeholder="请选择">
+                  <el-option v-for="item in role" :key="item.value" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="createReset">取消</el-button>
+              <el-button @click.native="createSubmit" :loading="addLoading" type="primary">确定</el-button>
+            </div>
+          </el-dialog>
+        </div>
+      </div>
+
+    </div>
   </div>
 </template>
 <script>
@@ -63,6 +71,14 @@
     name: "login",
     data() {
       return {
+        roles: '',
+        role: [{
+          value: '1',
+          label: 'ADMIN'
+        }, {
+          value: '2',
+          label: 'STUDENT'
+        }],
         loginForm: {
           userName: '',
           userPassword: ''
@@ -167,7 +183,8 @@
           gender: '',
           identityCard: '',
           phone: '',
-          address: ''
+          address: '',
+          role: ''
         };
       },
       createReset() {
@@ -187,6 +204,7 @@
                 identityCard: this.addForm.identityCard,
                 phone: this.addForm.phone,
                 address: this.addForm.address,
+                role: this.roles
               };
               var data = this.$qs.stringify(parematers);
               console.log(data);
@@ -234,6 +252,4 @@
     font-size: 30px;
     font-weight: bold;
   }
-
-
 </style>
