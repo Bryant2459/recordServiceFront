@@ -11,7 +11,6 @@ import qs from 'qs'
 import echarts from 'echarts'
 
 
-
 Vue.use(ElementUI);
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false

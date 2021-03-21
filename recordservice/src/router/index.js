@@ -14,10 +14,10 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path: '/record',
-      name: 'record',
-      component: record
-    },
+    path: '/record',
+    name: 'record',
+    component: record
+  },
     {
       path: '/',
       name: 'login',

@@ -9,7 +9,6 @@ function resolve(dir) {
 }
 
 
-
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
@@ -30,10 +29,10 @@ module.exports = {
   },
   module: {
     rules: [{
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: vueLoaderConfig
-      },
+      test: /\.vue$/,
+      loader: 'vue-loader',
+      options: vueLoaderConfig
+    },
       {
         test: /\.js$/,
         loader: 'babel-loader',
@@ -50,7 +49,7 @@ module.exports = {
       {
         test: /\.(eot|svg|ttf|woff2)(\?\S*)?$/,
         loader: 'file-loader'
-       },
+      },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
         loader: 'url-loader',

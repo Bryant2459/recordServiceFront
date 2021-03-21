@@ -27,10 +27,10 @@ export default {
           trigger: 'blur'
         }],
         money: [{
-            "message": "请输入收入",
-            "required": true,
-            "trigger": "blur"
-          },
+          "message": "请输入收入",
+          "required": true,
+          "trigger": "blur"
+        },
           {
             pattern: /^\d+(\.\d+)?$/,
             message: '请输入正确的数值'
@@ -38,10 +38,10 @@ export default {
 
         ],
         remark: [{
-            required: false,
-            message: '备注',
-            trigger: 'blur'
-          },
+          required: false,
+          message: '备注',
+          trigger: 'blur'
+        },
 
         ],
 
@@ -114,7 +114,7 @@ export default {
         table2obj['printSum'] = printSum;
         this.table2Data.push(table2obj);
 
-      }).catch(function(error) {
+      }).catch(function (error) {
         console.log(error);
       })
     },
@@ -187,7 +187,7 @@ export default {
     }
 
   },
-  mounted: function() {
+  mounted: function () {
     this.getall()
   },
 }
